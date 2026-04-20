@@ -9,6 +9,9 @@ export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
   apiVersion: process.env.API_VERSION || 'v1',
 
+  // API Key for external access
+  apiKey: process.env.API_KEY || 'dev-api-key-change-in-production',
+
   // Database
   database: {
     host: process.env.DB_HOST || 'localhost',
@@ -64,7 +67,7 @@ export const config = {
 const requiredEnvVars = ['JWT_SECRET'];
 
 if (config.nodeEnv === 'production') {
-  requiredEnvVars.push('DB_PASSWORD', 'EMAIL_HOST', 'EMAIL_USER', 'EMAIL_PASSWORD');
+  requiredEnvVars.push('DB_PASSWORD', 'EMAIL_HOST', 'EMAIL_USER', 'EMAIL_PASSWORD', 'API_KEY');
 }
 
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);

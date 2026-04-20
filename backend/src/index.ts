@@ -3,6 +3,7 @@ import cors from 'cors';
 import { logger } from './utils/logger';
 import { config } from './config';
 import { testConnection } from './config/database';
+import { validateApiKey } from './middleware/apiKey';
 import authRoutes from './routes/authRoutes';
 import projectRoutes from './routes/projectRoutes';
 import riskRoutes from './routes/riskRoutes';
@@ -37,7 +38,7 @@ app.use((_req, _res, next) => {
   next();
 });
 
-// Health check endpoint
+// Health check endpoint (no API key required)
 app.get('/health', async (_req, res) => {
   const dbHealthy = await testConnection();
   res.json({
@@ -46,6 +47,9 @@ app.get('/health', async (_req, res) => {
     database: dbHealthy ? 'connected' : 'disconnected',
   });
 });
+
+// Apply API key validation to all API routes
+app.use('/api', validateApiKey);
 
 // API routes
 app.use('/api/auth', authRoutes);
