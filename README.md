@@ -1,128 +1,59 @@
 # 🎯 Project Risk Analyzer
 
-A full-stack web application that enables project managers and teams to proactively identify, assess, and mitigate project risks using artificial intelligence and machine learning.
+A full-stack web application for proactive project risk identification, assessment, and mitigation using AI and machine learning.
 
-## 🌟 Features
+## ✨ Features
 
-- **User Authentication**: Secure JWT-based authentication with registration, login, and password reset
-- **Project Management**: Create and manage multiple projects with detailed parameters
-- **AI-Powered Risk Analysis**: Automated risk identification using ML models and rule-based analysis
-- **Risk Scoring & Categorization**: Risks scored 0-100 and categorized (Technical, Resource, Schedule, Budget, External)
-- **Mitigation Recommendations**: AI-generated actionable strategies to reduce risks
-- **Interactive Dashboard**: Visual analytics with charts and metrics using Recharts
-- **Historical Tracking**: Track how risks evolve over time
-- **Report Generation**: Export risk analyses as PDF or CSV
+- 🔐 **Secure Authentication** - JWT-based user authentication
+- 📊 **Project Management** - Create and manage multiple projects
+- 🤖 **AI Risk Analysis** - Automated risk detection and scoring (0-100)
+- 📈 **Interactive Dashboard** - Visual analytics with charts
+- 💡 **Smart Recommendations** - AI-generated mitigation strategies
+- 📜 **Historical Tracking** - Monitor risk evolution over time
+- 📄 **Report Generation** - Export as PDF or CSV
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- React 18+ with TypeScript
-- Vite for build tooling
-- React Router for navigation
-- React Query for state management
-- Recharts for data visualization
-- Tailwind CSS for styling
-- Axios for API communication
-
-### Backend
-- Node.js 18+ with Express.js
-- TypeScript for type safety
-- PostgreSQL 14+ for database
-- Redis for caching
-- JWT for authentication
-- Bcrypt for password hashing
-- Winston for logging
-
-### Risk Engine
-- Python 3.11+ with Flask
-- Pydantic for data validation
-- PERT/CPM analysis algorithms
-- Rule-based risk detection
-
-### DevOps
-- Docker & Docker Compose
-- Multi-stage builds for production
-- Environment-based configuration
+**Frontend:** React, TypeScript, Vite, Tailwind CSS, Recharts  
+**Backend:** Node.js, Express, PostgreSQL, Redis  
+**Risk Engine:** Python, Flask, PERT/CPM algorithms  
+**DevOps:** Docker, Docker Compose
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Docker and Docker Compose
-- Node.js 18+ (for local development)
-- Python 3.11+ (for local development)
+- Docker and Docker Compose installed
 
-### Running with Docker (Recommended)
+### Run the Application
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/project-risk-analyzer.git
-cd project-risk-analyzer
-```
+# Clone the repository
+git clone https://github.com/shyam-piparva/Project-Risk-Analyzer.git
+cd Project-Risk-Analyzer
 
-2. Copy environment file:
-```bash
+# Copy environment file
 cp .env.example .env
-```
 
-3. Start all services:
-```bash
+# Start all services
 docker-compose up --build
 ```
 
-4. Access the application:
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:3000
-- Risk Engine: http://localhost:5001
+### Access the Application
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:3000
+- **Risk Engine:** http://localhost:5001
 
-### Local Development
-
-See [DEVELOPER.md](DEVELOPER.md) for detailed development setup instructions.
-
-## 📖 Documentation
-
-- [Setup Guide](SETUP.md) - Complete setup instructions
-- [Developer Guide](DEVELOPER.md) - Development workflow and guidelines
-- [API Documentation](backend/docs/API.md) - REST API endpoints and examples
-- [User Guide](USER_GUIDE.md) - End-user documentation
-- [Deployment Guide](DEPLOYMENT.md) - Production deployment instructions
-
-## 🏗️ Project Structure
+## 📁 Project Structure
 
 ```
 project-risk-analyzer/
-├── backend/              # Node.js/Express API
-├── frontend/             # React application
-├── risk-engine/          # Python risk analysis engine
-├── .kiro/               # Specifications and design docs
-├── docker-compose.yml   # Docker services configuration
-└── README.md
-```
-
-## 🔧 Environment Variables
-
-Key environment variables (see `.env.example` for complete list):
-
-```env
-# Database
-DB_NAME=risk_analyzer
-DB_USER=postgres
-DB_PASSWORD=postgres
-
-# Backend
-BACKEND_PORT=3000
-JWT_SECRET=your-secret-key
-
-# Frontend
-FRONTEND_PORT=5173
-VITE_API_URL=http://localhost:3000/api
-
-# Risk Engine
-RISK_ENGINE_PORT=5001
+├── backend/          # Node.js/Express API
+├── frontend/         # React application
+├── risk-engine/      # Python risk analysis engine
+└── docker-compose.yml
 ```
 
 ## 🧪 Testing
-
-Run tests for each component:
 
 ```bash
 # Backend tests
@@ -135,38 +66,25 @@ cd frontend && npm test
 cd risk-engine && pytest
 ```
 
-## 📊 Key Metrics
+## 📖 Documentation
 
-- **Overall Risk Score**: Weighted average of all identified risks (0-100)
-- **Risk Categories**: Technical, Resource, Schedule, Budget, External
-- **Severity Levels**: High (70-100), Medium (40-69), Low (0-39)
-- **Mitigation Priority**: High, Medium, Low based on impact and feasibility
+- [Setup Guide](SETUP.md)
+- [Developer Guide](DEVELOPER.md)
+- [API Documentation](backend/docs/API.md)
+- [User Guide](USER_GUIDE.md)
 
-## 🤝 Contributing
+## 👤 Author
 
-Contributions are welcome! Please read our contributing guidelines before submitting PRs.
+**Shyam Piparva**
+- GitHub: [@shyam-piparva](https://github.com/shyam-piparva)
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Authors
-
-- Your Name - Initial work
-
-## 🙏 Acknowledgments
-
-- Built with modern web technologies
-- Inspired by project management best practices
-- Uses PERT/CPM analysis techniques
-
-## 📧 Support
-
-For support, email your-email@example.com or open an issue in the GitHub repository.
+This project is licensed under the MIT License.
 
 ---
 
-Made with ❤️ by Your Team
+⭐ Star this repo if you find it helpful!
 
 ## Tech Stack
 
