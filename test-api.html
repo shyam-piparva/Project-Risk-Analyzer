@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>AI Project Risk Analyzer - API Test</h1>
+    
+    <div class="section">
+        <h2>1. Login</h2>
+        <input type="email" id="email" placeholder="Email" value="shyamp4605@gmail.com">
+        <input type="password" id="password" placeholder="Password" value="">
+        <button onclick="login()">Login</button>
+        <div id="loginResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>2. Get Projects</h2>
+        <button onclick="getProjects()">Get My Projects</button>
+        <div id="projectsResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>3. Get Risk Analysis</h2>
+        <input type="text" id="projectId" placeholder="Project ID">
+        <button onclick="getRisks()">Get Risks</button>
+        <div id="risksResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>4. Run Risk Analysis</h2>
+        <button onclick="analyzeProject()">Analyze Project</button>
+        <div id="analyzeResult"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let token = null;
+        let userId = null;
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('loginResult');
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    token = data.tokens.accessToken;
+                    userId = data.user.id;
+                    resultDiv.innerHTML = `<p class="success">✓ Login successful!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">✗ Login failed</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function getProjects() {
+            const resultDiv = document.getElementById('projectsResult');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="error">Please login first</p>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/projects`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<p class="success">✓ Projects retrieved!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    
+                    // Auto-fill first project ID
+                    if (data.projects && data.projects.length > 0) {
+                        document.getElementById('projectId').value = data.projects[0].id;
+                    }
+                } else {
+                    resultDiv.innerHTML = `<p class="error">✗ Failed to get projects</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function getRisks() {
+            const projectId = document.getElementById('projectId').value;
+            const resultDiv = document.getElementById('risksResult');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="error">Please login first</p>';
+                return;
+            }
+            
+            if (!projectId) {
+                resultDiv.innerHTML = '<p class="error">Please enter a project ID</p>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/projects/${projectId}/risks`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<p class="success">✓ Risks retrieved!</p>
+                        <p>Overall Score: ${data.overallScore}</p>
+                        <p>Total Risks: ${data.risks.length}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">✗ Failed to get risks</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function analyzeProject() {
+            const projectId = document.getElementById('projectId').value;
+            const resultDiv = document.getElementById('analyzeResult');
+            
+            if (!token) {
+                resultDiv.innerHTML = '<p class="error">Please login first</p>';
+                return;
+            }
+            
+            if (!projectId) {
+                resultDiv.innerHTML = '<p class="error">Please enter a project ID</p>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/projects/${projectId}/analyze`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<p class="success">✓ Analysis complete!</p>
+                        <p>Analysis ID: ${data.analysisId}</p>
+                        <p>Overall Score: ${data.overallScore}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">✗ Analysis failed</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

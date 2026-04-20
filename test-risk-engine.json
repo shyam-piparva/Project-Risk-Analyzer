@@ -1,0 +1,42 @@
+{
+  "project": {
+    "id": "test-project-123",
+    "name": "E-Commerce Platform",
+    "description": "Building a new e-commerce platform",
+    "start_date": "2026-04-15",
+    "end_date": "2026-06-15",
+    "budget": 50000,
+    "team_size": 3,
+    "team_composition": [
+      {
+        "role": "Developer",
+        "count": 2,
+        "experience_level": "Junior"
+      },
+      {
+        "role": "Designer",
+        "count": 1,
+        "experience_level": "Mid"
+      }
+    ],
+    "technology_stack": [
+      {
+        "name": "React",
+        "category": "Frontend",
+        "maturity": "Mature"
+      },
+      {
+        "name": "Deno 2.0",
+        "category": "Backend",
+        "maturity": "Experimental"
+      },
+      {
+        "name": "GraphQL",
+        "category": "API",
+        "maturity": "Emerging"
+      }
+    ],
+    "scope": "Full e-commerce platform with payment integration"
+  },
+  "user_id": "test-user-456"
+}

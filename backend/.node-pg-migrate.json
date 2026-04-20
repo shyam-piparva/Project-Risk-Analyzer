@@ -1,0 +1,16 @@
+{
+  "databaseUrl": {
+    "env": "DATABASE_URL"
+  },
+  "migrationsTable": "pgmigrations",
+  "dir": "migrations",
+  "direction": "up",
+  "count": 1,
+  "ignorePattern": "(\\..*|.*\\.md)",
+  "schema": "public",
+  "decamelize": true,
+  "checkOrder": true,
+  "verbose": true,
+  "createSchema": true,
+  "createMigrationsSchema": false
+}
