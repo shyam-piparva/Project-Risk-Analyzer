@@ -1,0 +1,110 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: risk-analyzer-db
+    plan: free
+    databaseName: risk_analyzer
+    databaseUser: postgres
+
+  # Redis Cache
+  - type: redis
+    name: risk-analyzer-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
+  # Backend API
+  - type: web
+    name: risk-analyzer-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DB_HOST
+        fromDatabase:
+          name: risk-analyzer-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: risk-analyzer-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: risk-analyzer-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: risk-analyzer-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: risk-analyzer-db
+          property: password
+      - key: REDIS_HOST
+        fromService:
+          name: risk-analyzer-redis
+          type: redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: risk-analyzer-redis
+          type: redis
+          property: port
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGIN
+        value: https://project1-pi-gray.vercel.app
+      - key: LOG_LEVEL
+        value: info
+      - key: RISK_ENGINE_URL
+        fromService:
+          name: risk-analyzer-engine
+          type: web
+          property: host
+
+  # Risk Engine (Python)
+  - type: web
+    name: risk-analyzer-engine
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python src/app.py
+    rootDir: risk-engine
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: DEBUG
+        value: False
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DB_HOST
+        fromDatabase:
+          name: risk-analyzer-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: risk-analyzer-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: risk-analyzer-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: risk-analyzer-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: risk-analyzer-db
+          property: password
+      - key: JWT_SECRET
+        sync: false
